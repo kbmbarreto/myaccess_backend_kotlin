@@ -10,7 +10,7 @@ data class UserModel (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     @Column(name = "username", length = 60)
-    val username: String,
+    val userName: String,
     @Column(name = "email", length = 75)
     val email: String,
     @Column(name = "password", length = 256)

@@ -4,6 +4,7 @@ import br.com.lambdateam.myaccess.model.PatchUser
 import br.com.lambdateam.myaccess.model.UserModel
 import br.com.lambdateam.myaccess.repository.UserRepository
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 @RestController
-@RequestMapping("users")
+@RequestMapping("users", produces = [MediaType.APPLICATION_JSON_VALUE])
 class UserControllerImpl(val userRepository: UserRepository) : UserController {
 
     @GetMapping
@@ -36,23 +37,23 @@ class UserControllerImpl(val userRepository: UserRepository) : UserController {
     override fun fullUpdateUser(@PathVariable("id") id:Long, @RequestBody user:UserModel) : UserModel {
         val foundUser = findUser(id)
         val copyUser = foundUser.copy(
-            username = user.username,
+            userName = user.userName,
             email = user.email,
             password = user.password
         )
         return userRepository.save(copyUser)
     }
 
-    @PatchMapping("/{id}")
-    override fun incrementalUpdateUser(@PathVariable("id") id: Long, @RequestBody user: PatchUser): UserModel {
-        val foundUser = findUser(id)
-        val copyUser = foundUser.copy(
-            username = user.username ?: foundUser.username,
-            email = user.email ?: foundUser.email,
-            password = user.password ?: foundUser.password
-        )
-        return userRepository.save(copyUser)
-    }
+//    @PatchMapping("/{id}")
+//    override fun incrementalUpdateUser(@PathVariable("id") id: Long, @RequestBody user: PatchUser): UserModel {
+//        val foundUser = findUser(id)
+//        val copyUser = foundUser.copy(
+//            userName = user.userName ?: foundUser.userName,
+//            email = user.email ?: foundUser.email,
+//            password = user.password ?: foundUser.password
+//        )
+//        return userRepository.save(copyUser)
+//    }
 
     @DeleteMapping("/{id}")
     override fun deleteUser(@PathVariable("id") id: Long) = userRepository.delete(findUser(id))
@@ -68,7 +69,7 @@ interface UserController {
 
     fun fullUpdateUser(id: Long, user: UserModel) : UserModel
 
-    fun incrementalUpdateUser(id: Long, user: PatchUser) : UserModel
+//    fun incrementalUpdateUser(id: Long, user: PatchUser) : UserModel
 
     fun deleteUser(@PathVariable("id") id: Long)
 }
