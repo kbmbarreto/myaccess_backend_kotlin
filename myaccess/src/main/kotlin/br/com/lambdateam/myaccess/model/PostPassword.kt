@@ -7,5 +7,5 @@ data class PostPassword (
     val userName: String,
     val password: String,
     val notes: String,
-    val iduser: Long
+    val idUser: Long
 )

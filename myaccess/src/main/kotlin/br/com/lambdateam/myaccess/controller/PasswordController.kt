@@ -1,11 +1,9 @@
-package br.com.lambdateam.myaccess.Controller
+package br.com.lambdateam.myaccess.controller
 
-import br.com.lambdateam.myaccess.Service.PasswordService
 import br.com.lambdateam.myaccess.extension.toModel
 import br.com.lambdateam.myaccess.model.PasswordModel
 import br.com.lambdateam.myaccess.model.PatchPassword
 import br.com.lambdateam.myaccess.model.PostPassword
-import br.com.lambdateam.myaccess.model.UserModel
 import br.com.lambdateam.myaccess.repository.PasswordRepository
 import br.com.lambdateam.myaccess.repository.UserRepository
 import org.springframework.http.HttpStatus
@@ -18,8 +16,7 @@ import org.springframework.web.server.ResponseStatusException
 @RestController
 @RequestMapping("passwords", produces = [MediaType.APPLICATION_JSON_VALUE])
 class PasswordControllerImpl(val passwordRepository: PasswordRepository,
-                             val userRepository: UserRepository,
-val passwordService: PasswordService) : PasswordController {
+                             val userRepository: UserRepository) : PasswordController {
 
     @GetMapping
     override fun listPasswords() = passwordRepository.findAll()
@@ -32,7 +29,7 @@ val passwordService: PasswordService) : PasswordController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     override fun createPassword(@RequestBody password: PostPassword) {
-        val user = userRepository.findById(password.iduser).get()
+        val user = userRepository.findById(password.idUser).get()
         passwordRepository.save(password.toModel(user))
     }
 //    @PostMapping
