@@ -14,12 +14,12 @@ data class PasswordModel (
     @Column(name = "url", length = 128)
     val url: String,
     @Column(name = "user", length = 64)
-    val user: String,
+    val userName: String,
     @Column(name = "password", length = 128)
     val password: String,
     @Column(name = "notes", length = 128)
     val notes: String,
     @ManyToOne
     @JoinColumn(name = "iduser")
-    val iduser: UserModel
+    val user: UserModel
 )
