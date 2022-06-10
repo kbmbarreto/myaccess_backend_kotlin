@@ -8,5 +8,5 @@ data class PatchPassword(
     val userName: String?,
     val password: String?,
     val notes: String?,
-    val iduser: Long
+    val idUser: Long
 )
