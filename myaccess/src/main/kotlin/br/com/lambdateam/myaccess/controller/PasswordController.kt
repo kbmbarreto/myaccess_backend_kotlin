@@ -32,24 +32,20 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
         val user = userRepository.findById(password.idUser).get()
         passwordRepository.save(password.toModel(user))
     }
-//    @PostMapping
-//    fun savePassword(@RequestBody password: PasswordModel) {
-//        passwordService.savePasssword(password)
-//    }
 
-//    @PutMapping("/{id}")
-//    override fun fullUpdatePassword(@PathVariable("id") id:Long, @RequestBody password:PasswordModel) : PasswordModel {
-//        val foundPassword = findPassword(id)
-//        val copyPassword = foundPassword.copy(
-//            description = password.description,
-//            url = password.url,
-//            userName = password.userName,
-//            password = password.password,
-//            notes = password.notes,
-//            iduser = password.iduser
-//        )
-//        return passwordRepository.save(copyPassword)
-//    }
+    @PutMapping("/{id}")
+    override fun fullUpdatePassword(@PathVariable("id") id:Long, @RequestBody password:PasswordModel) : PasswordModel {
+        val foundPassword = findPassword(id)
+        val copyPassword = foundPassword.copy(
+            description = password.description,
+            url = password.url,
+            userName = password.userName,
+            password = password.password,
+            notes = password.notes,
+            user = password.user
+        )
+        return passwordRepository.save(copyPassword)
+    }
 
     @PatchMapping("/{id}")
     override fun incrementalUpdatePassword(@PathVariable("id") id: Long, @RequestBody password: PatchPassword): PasswordModel {
@@ -77,7 +73,7 @@ interface PasswordController {
 
     fun createPassword(password: PostPassword)
 
-//    fun fullUpdatePassword(id: Long, user: PasswordModel) : PasswordModel
+    fun fullUpdatePassword(id: Long, user: PasswordModel) : PasswordModel
 
     fun incrementalUpdatePassword(id: Long, password: PatchPassword) : PasswordModel
 

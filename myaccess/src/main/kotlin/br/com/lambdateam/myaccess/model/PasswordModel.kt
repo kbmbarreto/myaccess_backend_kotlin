@@ -13,7 +13,7 @@ data class PasswordModel (
     val description: String,
     @Column(name = "url", length = 128)
     val url: String,
-    @Column(name = "user", length = 64)
+    @Column(name = "username", length = 64)
     val userName: String,
     @Column(name = "password", length = 128)
     val password: String,

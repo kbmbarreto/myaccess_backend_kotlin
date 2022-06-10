@@ -1,8 +1,11 @@
 package br.com.lambdateam.myaccess.controller
 
+import br.com.lambdateam.myaccess.extension.toModel
 import br.com.lambdateam.myaccess.model.PatchUser
+import br.com.lambdateam.myaccess.model.PostUser
 import br.com.lambdateam.myaccess.model.UserModel
 import br.com.lambdateam.myaccess.repository.UserRepository
+import org.apache.catalina.User
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
