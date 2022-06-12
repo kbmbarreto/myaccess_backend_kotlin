@@ -16,7 +16,7 @@ fun PostPassword.toModel(userModel: UserModel): PasswordModel {
     )
 }
 
-fun PostUser.toModel(userModel: UserModel): UserModel {
+fun PostUser.toModel(): UserModel {
     return UserModel(
         userName = userName,
         email = email,

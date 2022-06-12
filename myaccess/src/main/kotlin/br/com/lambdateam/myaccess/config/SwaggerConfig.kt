@@ -1,4 +1,4 @@
-package br.com.lambdateam.myaccess.Config
+package br.com.lambdateam.myaccess.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
