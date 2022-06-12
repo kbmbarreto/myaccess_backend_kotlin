@@ -5,7 +5,7 @@ import br.com.lambdateam.myaccess.model.PatchUser
 import br.com.lambdateam.myaccess.model.PostUser
 import br.com.lambdateam.myaccess.model.UserModel
 import br.com.lambdateam.myaccess.repository.UserRepository
-import org.apache.catalina.User
+import br.com.lambdateam.myaccess.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException
 @Service
 @RestController
 @RequestMapping("users", produces = [MediaType.APPLICATION_JSON_VALUE])
-class UserControllerImpl(val userRepository: UserRepository) : UserController {
+class UserControllerImpl(val userRepository: UserRepository, val userService: UserService) : UserController {
 
     @GetMapping
     override fun listUsers() = userRepository.findAll()
@@ -25,9 +25,15 @@ class UserControllerImpl(val userRepository: UserRepository) : UserController {
         userRepository.findById(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
 
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    override fun createUser(@RequestBody user: UserModel) = userRepository.save(user)
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    override fun createUser(@RequestBody user: UserModel) = userRepository.save(user)
+    fun createUser(@RequestBody user: PostUser) {
+        userService.createUser(user.toModel())
+    }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -63,8 +69,6 @@ interface UserController {
     fun listUsers() : List<UserModel>
 
     fun findUser(id: Long) : UserModel
-
-    fun createUser(user: UserModel): UserModel
 
     fun fullUpdateUser(id: Long, user: UserModel) : UserModel
 
