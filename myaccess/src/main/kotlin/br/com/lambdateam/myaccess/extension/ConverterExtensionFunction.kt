@@ -1,9 +1,6 @@
 package br.com.lambdateam.myaccess.extension
 
-import br.com.lambdateam.myaccess.model.PasswordModel
-import br.com.lambdateam.myaccess.model.PostPassword
-import br.com.lambdateam.myaccess.model.PostUser
-import br.com.lambdateam.myaccess.model.UserModel
+import br.com.lambdateam.myaccess.model.*
 
 fun PostPassword.toModel(userModel: UserModel): PasswordModel {
     return PasswordModel(
@@ -13,6 +10,17 @@ fun PostPassword.toModel(userModel: UserModel): PasswordModel {
         password = password,
         notes = notes,
         user = userModel
+    )
+}
+
+fun PasswordModel.toResponse(): PasswordResponse {
+    return PasswordResponse(
+        id = this.id,
+        description = this.description,
+        url = url,
+        userName = userName,
+        password = password,
+        notes = notes
     )
 }
 
