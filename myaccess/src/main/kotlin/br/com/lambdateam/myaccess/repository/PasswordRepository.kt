@@ -1,6 +1,7 @@
 package br.com.lambdateam.myaccess.repository
 
 import br.com.lambdateam.myaccess.model.PasswordModel
+import br.com.lambdateam.myaccess.model.PasswordResponse
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
