@@ -2,10 +2,7 @@ package br.com.lambdateam.myaccess.controller
 
 import br.com.lambdateam.myaccess.extension.toModel
 import br.com.lambdateam.myaccess.extension.toResponse
-import br.com.lambdateam.myaccess.model.PasswordResponse
-import br.com.lambdateam.myaccess.model.PasswordModel
-import br.com.lambdateam.myaccess.model.PatchPassword
-import br.com.lambdateam.myaccess.model.PostPassword
+import br.com.lambdateam.myaccess.model.*
 import br.com.lambdateam.myaccess.repository.PasswordRepository
 import br.com.lambdateam.myaccess.repository.UserRepository
 import br.com.lambdateam.myaccess.service.PasswordService
@@ -31,7 +28,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
     }
 
     @GetMapping("/{id}")
-    override fun findPassword(@PathVariable("id") id: Long) =
+    fun findPassword(@PathVariable("id") id: Long) =
         passwordRepository.findById(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
 
@@ -43,7 +40,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
     }
 
     @PutMapping("/{id}")
-    override fun fullUpdatePassword(@PathVariable("id") id:Long, @RequestBody password:PasswordModel) : PasswordModel {
+    override fun fullUpdatePassword(@PathVariable("id") id: Long, @RequestBody password: PutPassword) : PasswordModel {
         val foundPassword = findPassword(id)
         val copyPassword = foundPassword.copy(
             description = password.description,
@@ -51,7 +48,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
             userName = password.userName,
             password = password.password,
             notes = password.notes,
-            user = password.user
+            user = foundPassword.user
         )
         return passwordRepository.save(copyPassword)
     }
@@ -78,11 +75,9 @@ interface PasswordController {
 
     fun listPasswords() : List<PasswordModel>
 
-    fun findPassword(id: Long) : PasswordModel
-
     fun createPassword(password: PostPassword)
 
-    fun fullUpdatePassword(id: Long, user: PasswordModel) : PasswordModel
+    fun fullUpdatePassword(id: Long, user: PutPassword) : PasswordModel
 
     fun incrementalUpdatePassword(id: Long, password: PatchPassword) : PasswordModel
 
