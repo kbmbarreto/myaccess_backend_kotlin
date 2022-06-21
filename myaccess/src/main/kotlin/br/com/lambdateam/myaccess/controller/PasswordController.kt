@@ -40,6 +40,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     override fun fullUpdatePassword(@PathVariable("id") id: Long, @RequestBody password: PutPassword) : PasswordModel {
         val foundPassword = findPassword(id)
         val copyPassword = foundPassword.copy(
@@ -54,6 +55,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
     }
 
     @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     override fun incrementalUpdatePassword(@PathVariable("id") id: Long, @RequestBody password: PatchPassword): PasswordModel {
         val foundPassword = findPassword(id)
         val copyPassword = foundPassword.copy(
@@ -68,6 +70,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     override fun deletePassword(@PathVariable("id") id: Long) = passwordRepository.delete(findPassword(id))
 }
 
