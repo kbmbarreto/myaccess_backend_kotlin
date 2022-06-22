@@ -20,7 +20,9 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
                              val passwordService: PasswordService) : PasswordController {
 
     @GetMapping
-    override fun listPasswords() = passwordRepository.findAll()
+    fun findAll(): List<PasswordResponse> {
+        return passwordService.findAll().map { it.toResponse() }
+    }
 
     @GetMapping("/byDesc")
     fun getByDescription(@RequestParam description: String?): List<PasswordResponse> {
@@ -75,8 +77,6 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
 }
 
 interface PasswordController {
-
-    fun listPasswords() : List<PasswordModel>
 
     fun createPassword(password: PostPassword)
 

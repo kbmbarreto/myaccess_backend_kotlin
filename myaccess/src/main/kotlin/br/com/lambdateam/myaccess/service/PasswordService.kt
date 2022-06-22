@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 @Service
 class PasswordService (private val passwordRepository: PasswordRepository){
 
-    fun listPasswords(id: Long): List<PasswordModel> {
+    fun findAll(): List<PasswordModel> {
         return passwordRepository.findAll().toList()
     }
 
