@@ -7,6 +7,4 @@ import java.util.*
 interface UserRepository : JpaRepository<UserModel, Long> {
 
     override fun findById(id: Long): Optional<UserModel>
-    fun existsByUserName(userName: String): Boolean
-    fun existsByEmail(email: String): Boolean
 }
