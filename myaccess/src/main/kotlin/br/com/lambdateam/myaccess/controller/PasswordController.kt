@@ -14,7 +14,8 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 @RestController
-@RequestMapping("passwords", produces = [MediaType.APPLICATION_JSON_VALUE])
+//@RequestMapping(path = ["passwords"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping("passwords")
 class PasswordControllerImpl(val passwordRepository: PasswordRepository,
                              val userRepository: UserRepository,
                              val passwordService: PasswordService) : PasswordController {
@@ -29,10 +30,15 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
         return passwordService.getByDescription(description).map { it.toResponse() }
     }
 
+//    @GetMapping("/{id}")
+//    fun findPassword(@PathVariable("id") id: Long) =
+//        passwordRepository.findById(id)
+//            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+
     @GetMapping("/{id}")
-    fun findPassword(@PathVariable("id") id: Long) =
-        passwordRepository.findById(id)
-            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+    fun findById(@PathVariable id: Long): PasswordModel {
+        return passwordService.findById(id)
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,7 +50,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     override fun fullUpdatePassword(@PathVariable("id") id: Long, @RequestBody password: PutPassword) : PasswordModel {
-        val foundPassword = findPassword(id)
+        val foundPassword = findById(id)
         val copyPassword = foundPassword.copy(
             description = password.description,
             url = password.url,
@@ -59,7 +65,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     override fun incrementalUpdatePassword(@PathVariable("id") id: Long, @RequestBody password: PatchPassword): PasswordModel {
-        val foundPassword = findPassword(id)
+        val foundPassword = findById(id)
         val copyPassword = foundPassword.copy(
             description = password.description ?: foundPassword.description,
             url = password.url ?: foundPassword.url,
@@ -73,7 +79,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    override fun deletePassword(@PathVariable("id") id: Long) = passwordRepository.delete(findPassword(id))
+    override fun deletePassword(@PathVariable("id") id: Long) = passwordRepository.delete(findById(id))
 }
 
 interface PasswordController {
