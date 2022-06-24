@@ -17,4 +17,8 @@ class PasswordService (private val passwordRepository: PasswordRepository){
         }
         return passwordRepository.findAll().toList()
     }
+
+    fun findById(id: Long): PasswordModel {
+        return passwordRepository.findById(id).orElseThrow()
+    }
 }
