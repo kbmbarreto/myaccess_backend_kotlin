@@ -21,6 +21,7 @@ fun PasswordModel.toResponse(): PasswordResponse {
         userName = userName,
         password = password,
         notes = notes
+//        userId = user.id
     )
 }
 

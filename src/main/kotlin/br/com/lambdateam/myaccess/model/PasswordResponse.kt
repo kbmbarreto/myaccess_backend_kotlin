@@ -8,4 +8,5 @@ data class PasswordResponse(
     val userName: String?,
     val password: String?,
     val notes: String?
+//    val userId: Long?
 )

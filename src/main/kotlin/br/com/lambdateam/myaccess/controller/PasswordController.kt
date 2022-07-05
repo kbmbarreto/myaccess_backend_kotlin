@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 @RestController
-//@RequestMapping(path = ["passwords"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @RequestMapping("passwords")
 class PasswordControllerImpl(val passwordRepository: PasswordRepository,
                              val userRepository: UserRepository,
@@ -25,7 +24,7 @@ class PasswordControllerImpl(val passwordRepository: PasswordRepository,
         return passwordService.findAll().map { it.toResponse() }
     }
 
-    @GetMapping("/byDesc")
+    @GetMapping("/byDescription")
     fun getByDescription(@RequestParam description: String?): List<PasswordResponse> {
         return passwordService.getByDescription(description).map { it.toResponse() }
     }
